@@ -8,23 +8,23 @@ SolutionFlow 面向售前顾问、解决方案架构师与客户团队，把一�
 
 ## 产品界面
 
-### 机会工作台
-
-统一查看全部客户、当前阶段与组合信号。界面采用深绿色企业视觉体系，让业务状态、决策入口与重点账户保持清晰一致。
-
-![SolutionFlow 客户机会工作台](docs/images/accounts-workspace.jpg)
-
 ### Account Agent
 
-在客户页面直接输入业务目标。Agent 会读取账户信息、当前阶段和已有产物，给出观察、计划与一个明确的下一步动作，并展示实际使用过的工具轨迹。
+在客户页面直接输入业务目标。Agent 会读取账户信息、当前阶段和已有产物，给出观察、执行计划与一个明确的下一步动作，并展示实际使用过的工具轨迹和操作边界。
 
-![SolutionFlow Account Agent](docs/images/account-agent.jpg)
+![SolutionFlow Account Agent](photo/agent.png)
+
+### 八阶段证据工作流
+
+从企业调研一路推进到部署准备。每个阶段都有明确状态，当前阶段、完成比例、客户背景和审计记录集中呈现，业务结论可以沿证据链回溯。
+
+![SolutionFlow 八阶段证据工作流](photo/workflow.png)
 
 ### 系统评估
 
 内置五个明确标记为合成数据的完整客户旅程，以及 35 项可重复数据库断言，用于检查引用、证据完整性、需求与方案血缘、人工审批和八阶段完成情况。
 
-![SolutionFlow 系统评估](docs/images/system-evaluation.jpg)
+![SolutionFlow 系统评估](photo/evaluation.png)
 
 ## 核心价值
 
@@ -216,7 +216,7 @@ apps/
     app/               Next.js 页面与 API 代理
     components/        产品界面组件
     lib/               API 客户端、类型与辅助逻辑
-docs/images/           README 产品截图
+photo/                 README 高清产品截图
 compose.yaml           本地 PostgreSQL
 ```
 
