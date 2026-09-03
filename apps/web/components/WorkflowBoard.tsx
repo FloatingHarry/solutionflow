@@ -89,13 +89,13 @@ export function WorkflowBoard({
   }
 
   return (
-    <section className="panel workflowPanel">
+    <section className="panel workflowPanel" data-progress={progress}>
       <div className="panelHeading workflowHeading">
         <div>
-          <span className="eyebrow">Account workflow</span>
+          <span className="eyebrow"><i /> Account workflow</span>
           <h2>Evidence to decision</h2>
         </div>
-        <div className="progressValue"><strong>{progress}%</strong><span>complete</span></div>
+        <div className="progressValue"><strong>{progress}%</strong><span>journey complete</span></div>
       </div>
       <div className="progressTrack" aria-label={`${progress}% complete`}>
         <span style={{ width: `${progress}%` }} />

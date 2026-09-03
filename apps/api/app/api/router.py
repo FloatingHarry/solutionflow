@@ -3,6 +3,7 @@ from sqlalchemy import text
 
 from app.db.session import SessionDep
 from app.modules.accounts.router import router as accounts_router
+from app.modules.agent.router import router as agent_router
 from app.modules.business_case.router import router as business_case_router
 from app.modules.deployment.router import router as deployment_router
 from app.modules.discovery.router import router as discovery_router
@@ -26,6 +27,7 @@ def ready(session: SessionDep) -> dict[str, str]:
 
 
 api_router.include_router(accounts_router)
+api_router.include_router(agent_router)
 api_router.include_router(research_router)
 api_router.include_router(discovery_router)
 api_router.include_router(solutions_router)

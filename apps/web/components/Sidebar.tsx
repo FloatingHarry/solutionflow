@@ -28,6 +28,24 @@ function EvaluationIcon() {
   );
 }
 
+function CatalogIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 4h5v5H5zM14 4h5v5h-5zM5 14h5v5H5zM14 14h5v5h-5z" />
+    </svg>
+  );
+}
+
+function BrandGlyph() {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M7 9.5 16 4l9 5.5v8L16 23l-9-5.5z" />
+      <path d="m7 17.5 9 5.5 9-5.5V23l-9 5-9-5z" />
+      <path d="M16 12v11" />
+    </svg>
+  );
+}
+
 export function Sidebar() {
   const pathname = usePathname();
   const accountsActive = pathname.startsWith("/accounts");
@@ -36,36 +54,46 @@ export function Sidebar() {
   return (
     <aside className="sidebar">
       <Link href="/accounts" className="brand" aria-label="SolutionFlow home">
-        <span className="brandMark">S</span>
-        <span>
+        <span className="brandMark"><BrandGlyph /></span>
+        <span className="brandCopy">
           <strong>SolutionFlow</strong>
-          <small>Enterprise Copilot</small>
+          <small>Enterprise intelligence</small>
         </span>
+        <span className="brandEdition">01</span>
       </Link>
 
       <nav className="primaryNav" aria-label="Primary navigation">
-        <p className="navLabel">Workspace</p>
+        <div className="navGroupHeading"><p className="navLabel">Command center</p><span>2 spaces</span></div>
         <Link href="/accounts" className={accountsActive ? "navItem active" : "navItem"}>
           <AccountsIcon />
-          Accounts
+          <span className="navItemCopy"><strong>Accounts</strong><small>Opportunity pipeline</small></span>
+          <span className="navIndicator" />
         </Link>
         <Link href="/evaluation" className={evaluationActive ? "navItem active" : "navItem"}>
           <EvaluationIcon />
-          System evaluation
+          <span className="navItemCopy"><strong>System evaluation</strong><small>Quality & regression</small></span>
+          <span className="navIndicator" />
         </Link>
         <span className="navItem disabled" aria-disabled="true">
-          <ActivityIcon />
-          Solution catalog
-          <small>Later</small>
+          <CatalogIcon />
+          <span className="navItemCopy"><strong>Solution catalog</strong><small>Reusable patterns</small></span>
+          <span className="navSoon">Soon</span>
         </span>
       </nav>
+
+      <div className="sidebarPulseCard">
+        <div className="pulseGlyph"><ActivityIcon /></div>
+        <div><span>Decision engine</span><strong>Evidence-linked</strong></div>
+        <i aria-hidden="true" />
+      </div>
 
       <div className="sidebarFooter">
         <span className="environmentDot" />
         <span>
-          <strong>Development</strong>
-          <small>Phase 7 · MVP complete</small>
+          <strong>Workspace online</strong>
+          <small>MVP · 8 stages operational</small>
         </span>
+        <span className="environmentCode">DEV</span>
       </div>
     </aside>
   );

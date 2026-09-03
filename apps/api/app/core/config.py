@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     research_run_inline: bool = False
     openai_api_key: str | None = None
     openai_research_model: str = "gpt-5.4-mini"
+    agent_provider: str = "auto"
+    openai_agent_model: str = "gpt-5.6-luna"
 
     model_config = SettingsConfigDict(
         env_file=(".env", "../../.env"),

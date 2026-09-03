@@ -560,3 +560,55 @@ export interface SystemEvaluationWorkspace {
   demo_accounts: DemoAccountSummary[];
   latest_run: SystemEvaluationRun | null;
 }
+
+export type AgentProvider = "guided" | "openai";
+export type AgentRunStatus =
+  | "completed"
+  | "awaiting_approval"
+  | "action_completed"
+  | "rejected"
+  | "failed";
+export type AgentActionStatus = "none" | "pending" | "executed" | "rejected" | "failed";
+
+export interface AgentAction {
+  key: string;
+  title: string;
+  description: string;
+  reason: string;
+  target_path: string | null;
+  requires_approval: boolean;
+  status: AgentActionStatus;
+  result: Record<string, unknown>;
+}
+
+export interface AgentRun {
+  id: string;
+  account_id: string;
+  goal: string;
+  status: AgentRunStatus;
+  provider: AgentProvider;
+  model: string | null;
+  provider_response_id: string | null;
+  stage_snapshot: string;
+  summary: string;
+  observations: string[];
+  plan: string[];
+  question: string | null;
+  trace: Array<Record<string, unknown>>;
+  action: AgentAction | null;
+  approval_note: string | null;
+  error_message: string | null;
+  created_at: string;
+  updated_at: string;
+  completed_at: string | null;
+}
+
+export interface AgentWorkspace {
+  account_id: string;
+  live_agent_available: boolean;
+  mode: AgentProvider;
+  model: string | null;
+  capabilities: string[];
+  starter_prompts: string[];
+  runs: AgentRun[];
+}

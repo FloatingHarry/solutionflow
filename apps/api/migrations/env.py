@@ -6,6 +6,7 @@ from sqlalchemy import engine_from_config, pool
 from app.core.config import settings
 from app.db.base import Base
 from app.modules.accounts import models  # noqa: F401
+from app.modules.agent import models as agent_models  # noqa: F401
 from app.modules.business_case import models as business_case_models  # noqa: F401
 from app.modules.deployment import models as deployment_models  # noqa: F401
 from app.modules.discovery import models as discovery_models  # noqa: F401

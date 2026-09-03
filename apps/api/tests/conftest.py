@@ -3,6 +3,7 @@ import os
 os.environ["DATABASE_URL"] = "sqlite+pysqlite:///:memory:"
 os.environ["RESEARCH_PROVIDER"] = "mock"
 os.environ["RESEARCH_RUN_INLINE"] = "true"
+os.environ["AGENT_PROVIDER"] = "guided"
 
 import pytest
 from fastapi.testclient import TestClient
@@ -14,6 +15,7 @@ from app.db.base import Base
 from app.db.session import get_db
 from app.main import app
 from app.modules.accounts import models  # noqa: F401
+from app.modules.agent import models as agent_models  # noqa: F401
 from app.modules.business_case import models as business_case_models  # noqa: F401
 from app.modules.deployment import models as deployment_models  # noqa: F401
 from app.modules.discovery import models as discovery_models  # noqa: F401
