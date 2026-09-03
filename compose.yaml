@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: solutionflow
+      POSTGRES_USER: solutionflow
+      POSTGRES_PASSWORD: solutionflow
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U solutionflow -d solutionflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - solutionflow_postgres:/var/lib/postgresql/data
+
+volumes:
+  solutionflow_postgres:
+
