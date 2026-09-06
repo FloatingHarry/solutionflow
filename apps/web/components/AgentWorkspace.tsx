@@ -138,6 +138,24 @@ export function AgentWorkspace({ accountName, initialWorkspace, readOnly = false
                   </div>
                 </div>
 
+                {latestRun.citations.length ? (
+                  <div className="agentCitationStrip">
+                    <span className="agentSectionLabel">Knowledge grounding</span>
+                    <div>
+                      {latestRun.citations.slice(0, 4).map((citation, index) => (
+                        <article key={String(citation.citation_id ?? index)}>
+                          <em>{String(citation.knowledge_scope ?? "knowledge")}</em>
+                          <strong>{String(citation.document_title ?? citation.source_file ?? "Source")}</strong>
+                          <small>
+                            v{String(citation.document_version ?? "—")} · {citation.page_number ? `p.${String(citation.page_number)}` : citation.section ? `§ ${String(citation.section)}` : `chunk ${String(Number(citation.chunk_position ?? 0) + 1)}`}
+                          </small>
+                          <code>{String(citation.citation_id ?? "")}</code>
+                        </article>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
                 {latestRun.action ? (
                   <div className="agentActionCard" data-action-status={latestRun.action.status}>
                     <div className="agentActionNumber">NEXT</div>

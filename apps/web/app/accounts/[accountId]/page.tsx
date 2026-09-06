@@ -56,6 +56,7 @@ export default async function AccountPage({ params }: { params: Promise<{ accoun
 
       <nav className="accountTabs" aria-label="Account sections">
         <Link href={`/accounts/${account.id}`} className="active">Overview</Link>
+        <Link href={`/accounts/${account.id}/knowledge`}>Knowledge</Link>
         <Link href={`/accounts/${account.id}/research`}>Research</Link><Link href={`/accounts/${account.id}/discovery`}>Discovery</Link><Link href={`/accounts/${account.id}/solutions`}>Solutions</Link><Link href={`/accounts/${account.id}/poc`}>POC</Link><Link href={`/accounts/${account.id}/poc`}>Evaluation</Link><Link href={`/accounts/${account.id}/business-case`}>Business Case</Link><Link href={`/accounts/${account.id}/deployment`}>Deployment</Link>
         <Link href={`/accounts/${account.id}/activity`}>Activity</Link>
       </nav>

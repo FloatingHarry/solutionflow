@@ -15,7 +15,10 @@ async function forward(request: Request, context: { params: Promise<{ path: stri
     const response = await fetch(target, {
       method: request.method,
       headers,
-      body: request.method === "GET" || request.method === "HEAD" ? undefined : await request.text(),
+      body:
+        request.method === "GET" || request.method === "HEAD"
+          ? undefined
+          : await request.arrayBuffer(),
       cache: "no-store",
     });
     return new Response(response.body, {

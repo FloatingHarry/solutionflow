@@ -36,6 +36,8 @@ def test_guided_agent_plans_and_executes_approved_research(client):
         "inspect_account",
         "inspect_workflow",
         "inspect_stage_artifacts",
+        "search_account_knowledge",
+        "search_enterprise_knowledge",
     ]
 
     approved = client.post(

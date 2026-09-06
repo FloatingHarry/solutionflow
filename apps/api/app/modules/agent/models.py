@@ -50,6 +50,9 @@ class AgentRun(Base):
     plan: Mapped[list[str]] = mapped_column(json_column(), default=list, nullable=False)
     question: Mapped[str | None] = mapped_column(Text)
     trace: Mapped[list[dict[str, Any]]] = mapped_column(json_column(), default=list, nullable=False)
+    citations: Mapped[list[dict[str, Any]]] = mapped_column(
+        json_column(), default=list, nullable=False
+    )
     action_key: Mapped[str | None] = mapped_column(String(100))
     action_title: Mapped[str | None] = mapped_column(String(240))
     action_description: Mapped[str | None] = mapped_column(Text)

@@ -20,6 +20,7 @@ from app.modules.business_case import models as business_case_models  # noqa: F4
 from app.modules.deployment import models as deployment_models  # noqa: F401
 from app.modules.discovery import models as discovery_models  # noqa: F401
 from app.modules.evaluation import models as evaluation_models  # noqa: F401
+from app.modules.knowledge import models as knowledge_models  # noqa: F401
 from app.modules.poc import models as poc_models  # noqa: F401
 from app.modules.research import models as research_models  # noqa: F401
 from app.modules.solutions import models as solution_models  # noqa: F401

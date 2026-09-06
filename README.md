@@ -4,7 +4,7 @@ SolutionFlow 面向售前顾问、解决方案架构师与客户团队，把一�
 
 它不是单纯的流程看板，也不是可以随意修改数据的聊天机器人。新增的 **Account Agent** 会理解用户目标、检查当前客户状态、调用受限工具、制定计划并建议下一步；一旦动作会创建或修改业务记录，Agent 就会暂停，等待用户明确批准。
 
-> 当前状态：完整 MVP + Account Agent 已实现。前后端、数据库迁移、自动化测试和生产构建均已验证。
+> 当前状态：完整 MVP + Account Agent + Enterprise / Account Knowledge RAG 已实现。前后端、pgvector 数据库迁移、自动化测试和生产构建均已验证。
 
 ## 产品界面
 
@@ -37,6 +37,30 @@ SolutionFlow 面向售前顾问、解决方案架构师与客户团队，把一�
 | ROI 数字容易被误当成真实收益 | 所有商业结果都标记为场景估算，并保存计算假设 |
 | 上线准备靠口头同步 | 按安全、隐私、采购、集成、运营、治理六类检查责任人与证据 |
 | Agent 可能越权或误操作 | 写操作必须人工批准，且仍由原有业务服务校验和执行 |
+| 客户资料与企业知识彼此割裂 | 使用统一 ingestion / chunking / retrieval，在 Account 与 Enterprise namespace 中严格隔离 |
+| RAG 容易把检索文本误当成客户事实 | 检索结果只生成 Evidence Candidate，必须经过 Review / Discovery 才能进入 Confirmed Need |
+
+## Phase 9：统一 Knowledge Layer
+
+每个 Account 都有一个独立的 `Knowledge` 工作台，但可以同时访问两类知识：
+
+- **Account Knowledge**：只属于当前客户的 RFP、Discovery / Meeting Notes、客户架构和历史业务文档。
+- **Enterprise Knowledge**：不绑定任何客户，可跨 Account 共享产品能力、Solution Playbook、Case Study、安全合规和部署指南。
+
+两类文档复用同一套 PDF / DOCX / Markdown / TXT 解析、分块、384 维 embedding 和混合检索基础设施。PostgreSQL 数据约束要求 Account 文档必须绑定 `account_id`，Enterprise 文档必须不绑定客户；查询服务还会再次应用 scope、account 和 metadata 过滤，防止其他客户的 private chunk 进入候选集。
+
+检索链路为：
+
+```text
+Query
+  → Account / Enterprise 权限过滤
+  → pgvector dense candidates + PostgreSQL keyword candidates
+  → document metadata 过滤
+  → vector / keyword / metadata / phrase rerank
+  → top-k Evidence Candidates + versioned citations
+```
+
+文档支持 `active / superseded / archived` 状态；同 namespace 上传同名文件时自动生成新版本并将旧 active 版本标记为 superseded。引用会保留文件名、版本、页码或 Section、chunk、scope、metadata 和检索分数。
 
 ## Agent 是如何工作的
 
@@ -44,6 +68,8 @@ SolutionFlow 面向售前顾问、解决方案架构师与客户团队，把一�
 用户目标
    ↓
 读取客户、流程和阶段产物
+   ↓
+分别检索 Account Knowledge 与 Enterprise Knowledge
    ↓
 形成观察与执行计划
    ↓
@@ -59,6 +85,9 @@ Account Agent 是工作流之上的智能编排层：
 
 - 可以理解自然语言目标，而不是要求用户寻找固定按钮。
 - 只能使用白名单中的账户、工作流和阶段产物读取工具。
+- 使用两个边界清晰的知识工具：`search_account_knowledge` 与 `search_enterprise_knowledge`。
+- 每个知识结论保留文件、版本、页码 / Section 和 citation id，并进入 Agent Run 审计轨迹。
+- Agent 获批创建阶段产物时，`action_result` 会保存 `derived_from_evidence_ids` 和产物实体标识，形成通用 lineage。
 - 服务端会再次验证建议动作是否符合当前阶段。
 - 不允许跳过八阶段流程，也不能替用户通过人工审核门。
 - 每次运行、工具调用、建议、拒绝、批准与执行结果都会持久化。
@@ -84,16 +113,17 @@ Next.js 16 工作台
   │  同源 API 代理
 FastAPI 领域 API
   ├─ Account Agent：读取工具 → 计划 → 人工审批 → 领域动作
+  ├─ Knowledge RAG：双 namespace → pgvector / keyword → rerank → citation
   ├─ Research Provider：本地模拟 / OpenAI Responses API + Web Search
   └─ 八阶段领域服务与系统评估
   │
-PostgreSQL 16
+PostgreSQL 16 + pgvector
 ```
 
 - **Next.js** 负责页面展示和浏览器交互。
 - **FastAPI** 是唯一的业务规则边界，Agent 不能直接写数据库。
-- **PostgreSQL** 保存客户、证据链、阶段状态、Agent 运行记录和审计事件。
-- **Alembic** 管理数据库版本，当前迁移为 `20260903_0008`。
+- **PostgreSQL + pgvector** 保存客户、证据链、知识 chunk、向量、Agent 运行记录和审计事件。
+- **Alembic** 管理数据库版本，当前迁移为 `20260907_0010`。
 
 更详细的边界和数据血缘参见 [架构说明](docs/architecture.md)。原项目报告资料位于本地 `glm/`，该目录不会上传到 GitHub，也不参与运行。
 
@@ -161,6 +191,13 @@ OPENAI_RESEARCH_MODEL=gpt-5.4-mini
 # Account Agent：有 Key 时自动使用 OpenAI，否则使用 Guided 模式
 AGENT_PROVIDER=auto
 OPENAI_AGENT_MODEL=gpt-5.6-luna
+
+# Knowledge RAG：无 Key 使用确定性 feature-hash embedding 和证据摘录；有 Key 可启用模型 embedding / answer
+RAG_EMBEDDING_PROVIDER=auto
+OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+RAG_ANSWER_PROVIDER=auto
+OPENAI_RAG_MODEL=gpt-5.6-luna
+KNOWLEDGE_MAX_UPLOAD_MB=10
 ```
 
 修改后重启 FastAPI。设置 `AGENT_PROVIDER=guided` 可强制本地模式，设置为 `openai` 则要求实时提供方必须可用。
@@ -169,6 +206,10 @@ OPENAI_AGENT_MODEL=gpt-5.6-luna
 
 - `.env`、虚拟环境、构建产物和 `glm/` 报告资料均已加入 `.gitignore`。
 - OpenAI Key 只由 FastAPI 服务端读取，不会发送到浏览器。
+- Account Knowledge 查询始终附带当前 `account_id`；Enterprise Knowledge 的数据库记录禁止绑定客户。
+- 只有 active 文档参加检索；归档和旧版本仍保留审计记录，但不会进入候选集。
+- 上传文档内容被视为不可信参考数据，模型被明确禁止执行文档中的指令。
+- 知识检索只创建 Evidence Candidate，不能自动写入 Claim、Hypothesis 或 Confirmed Need。
 - 演示客户、网站、访谈回答、POC 结果和 ROI 数据全部是合成数据。
 - 实时调研只保存能够关联返回来源 URL 的主张。
 - 关键阶段需要人工审核；Agent 不能自行替用户批准。
@@ -193,7 +234,7 @@ npm run test:web
 npm run build:web
 ```
 
-当前验证结果：后端 **38 项测试通过**；前端测试、Lint、TypeScript 检查与生产构建通过；系统评估为 **35/35**。
+当前验证结果：后端 **42 项测试通过**；前端测试、Lint、TypeScript 检查与生产构建通过；系统评估为 **35/35**。
 
 ## 主要目录
 
@@ -203,6 +244,7 @@ apps/
     app/modules/
       accounts/       客户、流程与活动记录
       agent/          目标规划、工具轨迹、审批与动作执行
+      knowledge/      双知识域、文档解析、pgvector 混合检索、引用与 Evidence Candidate
       research/       调研、来源、证据与审核
       discovery/      假设、问题、回答与确认需求
       solutions/      方案目录、匹配、提案与审核
@@ -222,4 +264,4 @@ compose.yaml           本地 PostgreSQL
 
 ## 当前边界与后续方向
 
-当前版本已经完成从调研到部署准备的可运行闭环，并加入受控 Account Agent。下一阶段更适合投入生产化能力，包括：身份认证与权限、真实 CRM/知识库连接器、实时模型评估、可观测性、限流、备份恢复、CI/CD、基础设施部署以及正式安全评审。
+当前版本已经完成从调研到部署准备的可运行闭环，并加入受控 Account Agent 与双域 Knowledge RAG。当前 namespace 隔离由数据库和服务层执行；正式多用户生产环境仍需在下一阶段补充身份认证、企业知识管理员角色和细粒度 RBAC。其余生产化方向包括真实 CRM / 知识库连接器、实时模型评估、可观测性、限流、备份恢复、CI/CD、基础设施部署以及正式安全评审。

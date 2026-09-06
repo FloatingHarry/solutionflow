@@ -17,6 +17,11 @@ class Settings(BaseSettings):
     openai_research_model: str = "gpt-5.4-mini"
     agent_provider: str = "auto"
     openai_agent_model: str = "gpt-5.6-luna"
+    rag_embedding_provider: str = "auto"
+    openai_embedding_model: str = "text-embedding-3-small"
+    rag_answer_provider: str = "auto"
+    openai_rag_model: str = "gpt-5.6-luna"
+    knowledge_max_upload_mb: int = 10
 
     model_config = SettingsConfigDict(
         env_file=(".env", "../../.env"),

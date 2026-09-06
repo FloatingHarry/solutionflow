@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:16-alpine
+    image: pgvector/pgvector:pg16
     environment:
       POSTGRES_DB: solutionflow
       POSTGRES_USER: solutionflow
@@ -17,4 +17,3 @@ services:
 
 volumes:
   solutionflow_postgres:
-

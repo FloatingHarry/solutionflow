@@ -6562,6 +6562,804 @@ textarea:focus-visible {
   .evaluationTaskTable article { min-width: 650px; }
 }
 
+/* Phase 9 · unified account and enterprise knowledge */
+.knowledgeWorkspace {
+  display: grid;
+  gap: 18px;
+}
+
+.knowledgeHero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  overflow: hidden;
+  min-height: 214px;
+  padding: 30px 34px;
+  color: #effff8;
+  background:
+    radial-gradient(circle at 88% 22%, rgba(95, 230, 174, 0.2), transparent 28%),
+    linear-gradient(125deg, #082f28 0%, #0b4537 56%, #0d5944 100%);
+  border: 1px solid rgba(137, 228, 183, 0.16);
+  border-radius: 25px;
+  box-shadow: 0 24px 55px rgba(6, 49, 38, 0.17);
+}
+
+.knowledgeHero::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(157, 232, 195, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(157, 232, 195, 0.035) 1px, transparent 1px);
+  background-size: 27px 27px;
+  content: "";
+  pointer-events: none;
+}
+
+.knowledgeHeroCopy,
+.knowledgeScopeMap {
+  position: relative;
+  z-index: 1;
+}
+
+.knowledgeHeroCopy {
+  display: flex;
+  align-items: flex-start;
+  gap: 19px;
+  max-width: 640px;
+}
+
+.knowledgeGlyph {
+  display: grid;
+  flex: 0 0 auto;
+  width: 55px;
+  height: 55px;
+  place-items: center;
+  color: #8af0bb;
+  background: rgba(129, 237, 182, 0.09);
+  border: 1px solid rgba(145, 238, 190, 0.2);
+  border-radius: 17px;
+}
+
+.knowledgeGlyph svg,
+.knowledgeEmptyAnswer svg,
+.knowledgeFileDrop svg {
+  width: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.knowledgeHero .eyebrow {
+  color: rgba(179, 239, 209, 0.65);
+}
+
+.knowledgeHeroCopy h2 {
+  max-width: 610px;
+  margin: 7px 0 9px;
+  color: #f1fff8;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(30px, 3vw, 45px);
+  font-weight: 430;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.knowledgeHeroCopy p {
+  max-width: 600px;
+  margin: 0;
+  color: rgba(220, 245, 232, 0.66);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.knowledgeScopeMap {
+  display: grid;
+  grid-template-columns: 95px 15px 95px 15px 105px;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+}
+
+.knowledgeScopeMap > div {
+  display: grid;
+  min-height: 102px;
+  align-content: center;
+  padding: 13px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(176, 236, 206, 0.13);
+  border-radius: 15px;
+  backdrop-filter: blur(9px);
+}
+
+.knowledgeScopeMap > div span {
+  color: #78dea9;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.knowledgeScopeMap > div strong {
+  margin: 5px 0 1px;
+  color: #f1fff8;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 24px;
+  font-weight: 480;
+}
+
+.knowledgeScopeMap > div small {
+  color: rgba(220, 245, 232, 0.5);
+  font-size: 7px;
+  line-height: 1.3;
+}
+
+.knowledgeScopeMap > i,
+.knowledgeScopeMap > b {
+  color: rgba(148, 234, 190, 0.52);
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  text-align: center;
+}
+
+.knowledgeScopeMap .knowledgeScopeAgent {
+  background: linear-gradient(145deg, rgba(94, 231, 161, 0.2), rgba(255, 255, 255, 0.06));
+  border-color: rgba(125, 239, 180, 0.31);
+}
+
+.knowledgeStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #dfe7e2;
+  border-radius: 17px;
+}
+
+.knowledgeStats > div {
+  display: grid;
+  padding: 17px 20px;
+  border-right: 1px solid #e7ede9;
+}
+
+.knowledgeStats > div:last-child { border-right: 0; }
+
+.knowledgeStats span,
+.knowledgeDocumentRow small,
+.knowledgeAnswer header span,
+.knowledgeCitationCard footer span {
+  color: #84938d;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.knowledgeStats strong {
+  margin: 3px 0 1px;
+  color: #173f33;
+  font-size: 11px;
+}
+
+.knowledgeStats small {
+  color: #91a09a;
+  font-size: 7px;
+}
+
+.knowledgeMainGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(335px, 0.76fr);
+  gap: 18px;
+}
+
+.knowledgeAskPanel,
+.knowledgeUploadPanel,
+.knowledgeEvidenceSection,
+.knowledgeLibrary {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #dbe5df;
+  border-radius: 21px;
+  box-shadow: 0 13px 34px rgba(15, 61, 47, 0.055);
+}
+
+.knowledgeAskPanel,
+.knowledgeUploadPanel {
+  padding: 24px;
+}
+
+.knowledgePanelHeading,
+.knowledgeSectionHeading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.knowledgePanelHeading h3,
+.knowledgeSectionHeading h3 {
+  margin: 4px 0 0;
+  color: #143b30;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 24px;
+  font-weight: 480;
+  letter-spacing: -0.02em;
+}
+
+.knowledgeLiveSignal {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 9px;
+  color: #32745e;
+  background: #eff9f4;
+  border: 1px solid #d7ebe1;
+  border-radius: 999px;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.knowledgeLiveSignal i {
+  width: 5px;
+  height: 5px;
+  background: #42ca83;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(66, 202, 131, 0.12);
+}
+
+.knowledgeAskForm {
+  margin-top: 18px;
+  padding: 12px;
+  background: #f5f8f6;
+  border: 1px solid #dce6e0;
+  border-radius: 15px;
+}
+
+.knowledgeAskForm textarea {
+  width: 100%;
+  min-height: 79px;
+  padding: 4px 5px 11px;
+  resize: vertical;
+  color: #183e33;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.knowledgeAskForm > div {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #dfe7e3;
+}
+
+.knowledgeAskForm label,
+.knowledgeFormGrid label {
+  display: grid;
+  gap: 5px;
+  color: #788a83;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.knowledgeAskForm select,
+.knowledgeFormGrid select,
+.knowledgeFormGrid input {
+  min-height: 35px;
+  padding: 0 9px;
+  color: #254a3e;
+  background: #fff;
+  border: 1px solid #d9e2dd;
+  border-radius: 8px;
+  outline: 0;
+  font: inherit;
+  font-size: 8px;
+}
+
+.knowledgeAskForm button,
+.knowledgeIngestButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 42px;
+  padding: 0 14px;
+  color: #effff6;
+  background: linear-gradient(135deg, #127053, #0a4b39);
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 8px;
+  font-weight: 850;
+}
+
+.knowledgeAskForm button i {
+  color: #8ceab8;
+  font-size: 13px;
+  font-style: normal;
+}
+
+.knowledgeAskForm button:disabled,
+.knowledgeIngestButton:disabled,
+.knowledgeDocumentStatus button:disabled,
+.knowledgeReviewActions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.knowledgeAnswer {
+  margin-top: 15px;
+  padding: 18px;
+  background: linear-gradient(145deg, #fbfdfc, #f0f8f4);
+  border: 1px solid #dbe9e2;
+  border-radius: 15px;
+}
+
+.knowledgeAnswer header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.knowledgeAnswer header > div {
+  display: grid;
+  gap: 2px;
+}
+
+.knowledgeAnswer header strong {
+  color: #3c6c5b;
+  font-size: 8px;
+}
+
+.knowledgeAnswer header em {
+  padding: 5px 8px;
+  color: #1b795a;
+  background: #dff5e9;
+  border-radius: 999px;
+  font-size: 7px;
+  font-style: normal;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.knowledgeAnswer h4 {
+  margin: 16px 0 7px;
+  color: #183f33;
+  font-size: 11px;
+}
+
+.knowledgeAnswer > p {
+  margin: 0;
+  color: #526b62;
+  font-size: 9px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.knowledgeBoundaryNotice {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 9px;
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px dashed #cadbd2;
+}
+
+.knowledgeBoundaryNotice strong {
+  color: #9b6b28;
+  font-size: 7px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.knowledgeBoundaryNotice span {
+  color: #7d7766;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.knowledgeEmptyAnswer {
+  display: grid;
+  min-height: 192px;
+  place-items: center;
+  align-content: center;
+  color: #6c847a;
+  text-align: center;
+}
+
+.knowledgeEmptyAnswer svg {
+  width: 35px;
+  margin-bottom: 13px;
+  color: #57b889;
+}
+
+.knowledgeEmptyAnswer strong { color: #315b4d; font-size: 11px; }
+.knowledgeEmptyAnswer span { margin-top: 4px; font-size: 8px; }
+
+.knowledgeScopeSwitch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin: 18px 0 12px;
+  padding: 4px;
+  background: #f0f5f2;
+  border-radius: 10px;
+}
+
+.knowledgeScopeSwitch button,
+.knowledgeLibraryFilters button {
+  padding: 8px 9px;
+  color: #70827b;
+  background: transparent;
+  border: 0;
+  border-radius: 7px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 7px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.knowledgeScopeSwitch button.active,
+.knowledgeLibraryFilters button.active {
+  color: #175e47;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(23, 83, 65, 0.08);
+}
+
+.knowledgeUploadForm { display: grid; gap: 12px; }
+
+.knowledgeFileDrop {
+  display: grid;
+  min-height: 105px;
+  place-items: center;
+  align-content: center;
+  padding: 13px;
+  color: #5e776d;
+  background: #fbfdfc;
+  border: 1px dashed #bdd7ca;
+  border-radius: 13px;
+  cursor: pointer;
+  text-align: center;
+  transition: 150ms ease;
+}
+
+.knowledgeFileDrop:hover {
+  background: #f1faf5;
+  border-color: #66bc91;
+}
+
+.knowledgeFileDrop input { width: 1px; height: 1px; opacity: 0; }
+
+.knowledgeFileDrop span {
+  display: grid;
+  width: 33px;
+  height: 33px;
+  margin-bottom: 7px;
+  place-items: center;
+  color: #2c9a6f;
+  background: #e4f7ed;
+  border-radius: 9px;
+}
+
+.knowledgeFileDrop svg { width: 18px; }
+.knowledgeFileDrop strong { color: #31584b; font-size: 9px; }
+.knowledgeFileDrop small { margin-top: 3px; color: #94a29c; font-size: 7px; }
+
+.knowledgeFormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.knowledgeIngestButton {
+  width: 100%;
+  margin-top: 2px;
+}
+
+.knowledgeError { margin: 0; }
+
+.knowledgeEvidenceSection,
+.knowledgeLibrary { padding: 25px; }
+
+.knowledgeSectionHeading {
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.knowledgeSectionHeading > p {
+  max-width: 450px;
+  margin: 0;
+  color: #7a8d85;
+  font-size: 8px;
+  text-align: right;
+}
+
+.knowledgeCitationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.knowledgeCitationCard {
+  overflow: hidden;
+  background: #fbfdfc;
+  border: 1px solid #dfe8e3;
+  border-radius: 15px;
+}
+
+.knowledgeCitationCard[data-scope="account"] { border-top: 3px solid #4ec98a; }
+.knowledgeCitationCard[data-scope="enterprise"] { border-top: 3px solid #688ee8; }
+
+.knowledgeCitationCard > header {
+  display: grid;
+  grid-template-columns: 31px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px;
+  border-bottom: 1px solid #e8eeea;
+}
+
+.knowledgeCitationCard > header > span {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  color: #207356;
+  background: #e5f6ed;
+  border-radius: 9px;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.knowledgeCitationCard header div { min-width: 0; display: grid; gap: 2px; }
+.knowledgeCitationCard header strong { overflow: hidden; color: #284f42; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.knowledgeCitationCard header small { overflow: hidden; color: #899891; font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
+.knowledgeCitationCard header em,
+.knowledgeDocumentRow em {
+  padding: 4px 7px;
+  color: #235f9c;
+  background: #edf3ff;
+  border-radius: 999px;
+  font-size: 6px;
+  font-style: normal;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.knowledgeCitationCard header em[data-scope="account"],
+.knowledgeDocumentRow em[data-scope="account"] {
+  color: #247353;
+  background: #e8f7ef;
+}
+
+.knowledgeCitationCard blockquote {
+  min-height: 80px;
+  margin: 0;
+  padding: 15px;
+  color: #526b62;
+  font-size: 8px;
+  line-height: 1.65;
+}
+
+.knowledgeCitationCard footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #f5f8f6;
+  border-top: 1px solid #e7ece9;
+}
+
+.knowledgeCitationCard footer > div:first-child { display: grid; }
+.knowledgeCitationCard footer > div:first-child strong { color: #1d6c50; font-size: 9px; }
+.knowledgeCitationCard footer code { margin-right: auto; color: #70827b; font-size: 7px; }
+
+.knowledgeReviewActions { display: flex; gap: 5px; }
+
+.knowledgeReviewActions button,
+.knowledgeDocumentStatus button {
+  padding: 5px 7px;
+  color: #3e6d5c;
+  background: #fff;
+  border: 1px solid #d4e2db;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 7px;
+  font-weight: 750;
+}
+
+.knowledgeCitationCard footer > b {
+  color: #27805e;
+  font-size: 7px;
+  text-transform: uppercase;
+}
+
+.knowledgeCitationCard footer > b[data-status="rejected"] { color: #b75e43; }
+
+.knowledgeLibraryFilters {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: #f0f5f2;
+  border-radius: 9px;
+}
+
+.knowledgeDocumentTable {
+  overflow: hidden;
+  border: 1px solid #e1e8e4;
+  border-radius: 13px;
+}
+
+.knowledgeDocumentRow {
+  display: grid;
+  grid-template-columns: 1.3fr 0.78fr 1.15fr 1fr 0.72fr;
+  align-items: center;
+  gap: 14px;
+  min-height: 67px;
+  padding: 11px 14px;
+  border-top: 1px solid #e9eeeb;
+}
+
+.knowledgeDocumentRow.heading {
+  min-height: 35px;
+  color: #85938e;
+  background: #f5f8f6;
+  border-top: 0;
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.knowledgeDocumentRow > div { display: grid; min-width: 0; gap: 4px; }
+.knowledgeDocumentRow strong { overflow: hidden; color: #315247; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.knowledgeDocumentRow small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.knowledgeDocumentRow em { justify-self: start; }
+
+.knowledgeDocumentStatus { justify-items: start; }
+
+.knowledgeDocumentStatus > span {
+  position: relative;
+  padding-left: 11px;
+  color: #2d795c;
+  font-size: 7px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.knowledgeDocumentStatus > span::before {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #43c783;
+  border-radius: 50%;
+  content: "";
+}
+
+.knowledgeDocumentStatus > span[data-status="archived"],
+.knowledgeDocumentStatus > span[data-status="superseded"] { color: #8a918d; }
+.knowledgeDocumentStatus > span[data-status="archived"]::before,
+.knowledgeDocumentStatus > span[data-status="superseded"]::before { background: #aeb7b3; }
+
+.knowledgeLibraryEmpty {
+  padding: 42px;
+  color: #87958f;
+  background: #f8faf9;
+  border: 1px dashed #d7e0db;
+  border-radius: 13px;
+  font-size: 9px;
+  text-align: center;
+}
+
+.agentCitationStrip {
+  margin: 0 20px 18px;
+  padding: 15px;
+  background: #f7faf8;
+  border: 1px solid #e0e9e4;
+  border-radius: 14px;
+}
+
+.agentCitationStrip > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.agentCitationStrip article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 9px;
+  background: #fff;
+  border: 1px solid #e1e9e5;
+  border-radius: 9px;
+}
+
+.agentCitationStrip em {
+  grid-row: span 2;
+  padding: 4px;
+  color: #207457;
+  background: #e4f6ed;
+  border-radius: 5px;
+  font-size: 6px;
+  font-style: normal;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.agentCitationStrip strong,
+.agentCitationStrip small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.agentCitationStrip strong { color: #315548; font-size: 8px; }
+.agentCitationStrip small { color: #85948e; font-size: 7px; }
+.agentCitationStrip code { grid-row: span 2; color: #788a82; font-size: 6px; }
+
+@media (max-width: 1120px) {
+  .knowledgeHero { align-items: flex-start; flex-direction: column; }
+  .knowledgeScopeMap { align-self: stretch; grid-template-columns: 1fr 20px 1fr 20px 1fr; }
+  .knowledgeScopeMap > div { min-height: 82px; }
+  .knowledgeDocumentRow { grid-template-columns: 1.2fr 0.8fr 1fr 0.8fr; }
+  .knowledgeDocumentRow > :nth-child(3),
+  .knowledgeDocumentRow.heading > :nth-child(3) { display: none; }
+}
+
+@media (max-width: 900px) {
+  .knowledgeStats { grid-template-columns: 1fr 1fr; }
+  .knowledgeStats > div:nth-child(2) { border-right: 0; }
+  .knowledgeStats > div:nth-child(-n + 2) { border-bottom: 1px solid #e7ede9; }
+  .knowledgeMainGrid { grid-template-columns: 1fr; }
+  .knowledgeCitationGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 650px) {
+  .knowledgeHero { padding: 25px 20px; border-radius: 20px; }
+  .knowledgeHeroCopy { flex-direction: column; }
+  .knowledgeHeroCopy h2 { font-size: 34px; }
+  .knowledgeScopeMap { grid-template-columns: 1fr 1fr; }
+  .knowledgeScopeMap > i,
+  .knowledgeScopeMap > b { display: none; }
+  .knowledgeScopeMap .knowledgeScopeAgent { grid-column: 1 / -1; }
+  .knowledgeStats { grid-template-columns: 1fr; }
+  .knowledgeStats > div { border-right: 0; border-bottom: 1px solid #e7ede9; }
+  .knowledgeStats > div:last-child { border-bottom: 0; }
+  .knowledgeAskPanel,
+  .knowledgeUploadPanel,
+  .knowledgeEvidenceSection,
+  .knowledgeLibrary { padding: 19px; border-radius: 17px; }
+  .knowledgeAskForm > div { align-items: stretch; flex-direction: column; }
+  .knowledgeFormGrid { grid-template-columns: 1fr; }
+  .knowledgeSectionHeading { align-items: flex-start; flex-direction: column; }
+  .knowledgeSectionHeading > p { text-align: left; }
+  .knowledgeDocumentTable { overflow-x: auto; }
+  .knowledgeDocumentRow { grid-template-columns: 180px 125px 140px 90px; min-width: 630px; }
+  .agentCitationStrip > div { grid-template-columns: 1fr; }
+}
+
 /* Account Agent ---------------------------------------------------------- */
 
 .agentWorkspace {

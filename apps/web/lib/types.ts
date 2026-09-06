@@ -595,6 +595,7 @@ export interface AgentRun {
   plan: string[];
   question: string | null;
   trace: Array<Record<string, unknown>>;
+  citations: Array<Record<string, unknown>>;
   action: AgentAction | null;
   approval_note: string | null;
   error_message: string | null;
@@ -611,4 +612,81 @@ export interface AgentWorkspace {
   capabilities: string[];
   starter_prompts: string[];
   runs: AgentRun[];
+}
+
+export type KnowledgeScope = "account" | "enterprise";
+export type KnowledgeDocumentStatus = "active" | "superseded" | "archived";
+export type KnowledgeConfidentiality = "internal" | "confidential" | "restricted";
+export type KnowledgeEmbeddingProvider = "local_hash" | "openai";
+export type KnowledgeAnswerProvider = "guided" | "openai";
+export type EvidenceCandidateStatus = "retrieved" | "reviewed" | "rejected";
+
+export interface KnowledgeDocument {
+  id: string;
+  account_id: string | null;
+  knowledge_scope: KnowledgeScope;
+  document_type: string;
+  title: string;
+  source_file: string;
+  media_type: string;
+  size_bytes: number;
+  checksum_sha256: string;
+  status: KnowledgeDocumentStatus;
+  confidentiality: KnowledgeConfidentiality;
+  version: number;
+  effective_date: string | null;
+  industry: string | null;
+  region: string | null;
+  product: string | null;
+  deployment_mode: string | null;
+  page_count: number;
+  chunk_count: number;
+  embedding_provider: KnowledgeEmbeddingProvider;
+  embedding_model: string;
+  metadata: Record<string, unknown>;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface KnowledgeEvidenceCandidate {
+  id: string;
+  citation_id: string;
+  knowledge_scope: KnowledgeScope;
+  source_file: string;
+  document_title: string;
+  document_version: number;
+  page_number: number | null;
+  section: string | null;
+  excerpt: string;
+  retrieval_score: number;
+  rerank_score: number;
+  metadata: Record<string, unknown>;
+  status: EvidenceCandidateStatus;
+  created_at: string;
+}
+
+export interface KnowledgeQuery {
+  id: string;
+  account_id: string;
+  question: string;
+  answer: string;
+  provider: KnowledgeAnswerProvider;
+  model: string | null;
+  scopes: KnowledgeScope[];
+  filters: Record<string, unknown>;
+  retrieval_metadata: Record<string, unknown>;
+  citations: KnowledgeEvidenceCandidate[];
+  created_at: string;
+}
+
+export interface KnowledgeWorkspace {
+  account_id: string;
+  answer_provider: KnowledgeAnswerProvider;
+  live_answer_available: boolean;
+  embedding_provider: KnowledgeEmbeddingProvider;
+  accepted_extensions: string[];
+  max_upload_mb: number;
+  accessible_scopes: KnowledgeScope[];
+  documents: KnowledgeDocument[];
+  recent_queries: KnowledgeQuery[];
 }

@@ -53,6 +53,7 @@ class AgentRunResponse(BaseModel):
     plan: list[str]
     question: str | None
     trace: list[dict[str, Any]]
+    citations: list[dict[str, Any]]
     action: AgentActionResponse | None
     approval_note: str | None
     error_message: str | None

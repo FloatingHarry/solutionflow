@@ -45,6 +45,7 @@ def serialize_run(run: AgentRun) -> AgentRunResponse:
         plan=run.plan,
         question=run.question,
         trace=run.trace,
+        citations=run.citations,
         action=action,
         approval_note=run.approval_note,
         error_message=run.error_message,

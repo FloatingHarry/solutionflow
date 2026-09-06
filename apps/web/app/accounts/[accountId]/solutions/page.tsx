@@ -50,6 +50,7 @@ export default async function SolutionsPage({
 
       <nav className="accountTabs" aria-label="Account sections">
         <Link href={`/accounts/${account.id}`}>Overview</Link>
+        <Link href={`/accounts/${account.id}/knowledge`}>Knowledge</Link>
         <Link href={`/accounts/${account.id}/research`}>Research</Link>
         <Link href={`/accounts/${account.id}/discovery`}>Discovery</Link>
         <Link href={`/accounts/${account.id}/solutions`} className="active">Solutions</Link>
